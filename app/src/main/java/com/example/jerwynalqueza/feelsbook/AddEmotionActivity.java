@@ -21,7 +21,6 @@ public class AddEmotionActivity extends AppCompatActivity {
         Toast.makeText(this, "Add Comment", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, AddEntryActivity.class);
-
         Bundle b = new Bundle();
 
         if(v.getId() == R.id.addLoveButton)
@@ -36,6 +35,7 @@ public class AddEmotionActivity extends AppCompatActivity {
             b.putString("Emotion", "Sadness");
         else if (v.getId() == R.id.addSurpriseButton)
             b.putString("Emotion", "Surprise");
+
         intent.putExtras(b);
         startActivity(intent);
     }

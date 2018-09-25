@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private Button statsButton;
     private Button historyButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
     public void openStatsActivity(){
         Toast.makeText(this, "Stats", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, StatsActivity.class);
+
+        EmotionsController ec = new EmotionsController();
+        Bundle b = new Bundle();
+        b.putStringArrayList("emotionNameList", ec.getNameList());
+        b.putIntegerArrayList("countList", ec.getCountList());
+        intent.putExtras(b);
         startActivity(intent);
     }
 

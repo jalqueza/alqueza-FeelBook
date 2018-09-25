@@ -16,7 +16,6 @@ public class AddEntryActivity extends AppCompatActivity {
     private EmotionsController ec = new EmotionsController();
 
 
-    // TO DO: ADD IT TO THE EMOTION CONTROLLER
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,21 +26,15 @@ public class AddEntryActivity extends AppCompatActivity {
     }
 
     public void skip(View v){
-        // add emotion, date, empty comment
-        // go back
         String date = new Date().toString();
-        //ec.init();
-        //ec.addEntry(emotionString, date, "");
+        ec.addEntry(emotionString, date, "");
         finish();
     }
 
     public void addComment(View v){
-        // add emotion, date, comment
-        // go back
         String date = new Date().toString();
         EditText comment = (EditText) findViewById(R.id.commentText);
-        //ec.init();
-        //ec.addEntry(emotionString, date, "");
+        ec.addEntry(emotionString, date, comment.getText().toString());
         finish();
     }
 }

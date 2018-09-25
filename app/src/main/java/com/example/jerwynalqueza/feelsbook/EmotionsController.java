@@ -17,34 +17,29 @@ public class EmotionsController {
     public void init(){
         if (emotionList == null) {
             emotionList = new EmotionList().getEmotionList();
+            emotionNameList = new ArrayList<String>();
+            countList = new ArrayList<Integer>();
             for (int i = 0; i < emotionList.size(); i++) {
-                emotionNameList = new ArrayList<String>();
-                countList = new ArrayList<Integer>();
                 countList.add(emotionList.get(i).getCount());
                 emotionNameList.add(emotionList.get(i).getName());
             }
         }
     }
 
-    static public ArrayList<Emotion> getEmotionList(){
+    public ArrayList<Emotion> getEmotionList(){
         return emotionList;
     }
 
-    static public ArrayList<String> getNameList(){
-        if (emotionList == null) {
-            ArrayList<Emotion> holder = getEmotionList();
-        }
+    public ArrayList<String> getNameList(){
+        init();
         return emotionNameList;
     }
-    static public ArrayList<Integer> getCountList() {
-        if (countList == null) {
-            ArrayList<Emotion> holder = getEmotionList();
-        }
+    public ArrayList<Integer> getCountList() {
+        init();
         return countList;
     }
 
     public void addEntry(String emotion, String date, String comment){
-        Log.d("YEEEET", "emotion: " + emotion + " date: " + date + " comment: " + comment);
         Entry entry = new Entry(emotion, date, comment, emotionList);
         entry.addCommentDate();
     }

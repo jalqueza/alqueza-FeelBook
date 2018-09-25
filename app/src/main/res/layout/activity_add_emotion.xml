@@ -74,7 +74,7 @@
         android:layout_width="402dp"
         android:layout_height="70dp"
         android:onClick="addEntryActivity"
-        android:text="Button 😨"
+        android:text="Fear 😨"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
