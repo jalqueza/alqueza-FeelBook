@@ -12,11 +12,11 @@ public class Entry {
     private ArrayList<Emotion> emotionList;
 
 
-    public Entry(String emotion, String date, String comment, EmotionList emotionList) {
+    public Entry(String emotion, String date, String comment, ArrayList<Emotion> emotionList) {
         this.emotion = emotion;
         this.date = date;
         this.comment = comment;
-        this.emotionList = emotionList.getEmotionList();
+        this.emotionList = emotionList;
     }
 
 

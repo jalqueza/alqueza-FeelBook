@@ -41,9 +41,9 @@ public class ExampleInstrumentedTest {
         assertTrue("Fear Emoji isn't in EmotionList", emotionList.getEmotionList().get(5).getEmoji().equals("\uD83D\uDE28"));
 
         String string = "I'm in love";
-        Entry newEntry0 = new Entry("Love", "January 2 2019", string, emotionList);
-        Entry newEntry1 = new Entry("Love", "January 3 2019", "I'm in love1", emotionList);
-        Entry newEntry2 = new Entry("Love", "January 4 2019", "I'm in love2", emotionList);
+        Entry newEntry0 = new Entry("Love", "January 2 2019", string, emotionList.getEmotionList());
+        Entry newEntry1 = new Entry("Love", "January 3 2019", "I'm in love1", emotionList.getEmotionList());
+        Entry newEntry2 = new Entry("Love", "January 4 2019", "I'm in love2", emotionList.getEmotionList());
         newEntry0.addCommentDate();
         newEntry1.addCommentDate();
         newEntry2.addCommentDate();
