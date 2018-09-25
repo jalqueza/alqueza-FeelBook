@@ -10,4 +10,8 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
     }
+
+    //ListAdapter emotionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emotionNameList);
+    //ListView statsListView = (ListView) findViewById(R.id.statsList);
+    //statsListView.setAdapter(emotionAdapter);
 }
