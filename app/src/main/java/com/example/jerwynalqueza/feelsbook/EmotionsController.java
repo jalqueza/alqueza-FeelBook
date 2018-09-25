@@ -1,5 +1,6 @@
 package com.example.jerwynalqueza.feelsbook;
 
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
@@ -17,6 +18,8 @@ public class EmotionsController {
         if (emotionList == null) {
             emotionList = new EmotionList().getEmotionList();
             for (int i = 0; i < emotionList.size(); i++) {
+                emotionNameList = new ArrayList<String>();
+                countList = new ArrayList<Integer>();
                 countList.add(emotionList.get(i).getCount());
                 emotionNameList.add(emotionList.get(i).getName());
             }
@@ -41,6 +44,8 @@ public class EmotionsController {
     }
 
     public void addEntry(String emotion, String date, String comment){
-
+        Log.d("YEEEET", "emotion: " + emotion + " date: " + date + " comment: " + comment);
+        Entry entry = new Entry(emotion, date, comment, emotionList);
+        entry.addCommentDate();
     }
 }
