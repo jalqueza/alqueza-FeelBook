@@ -80,16 +80,6 @@ public class MainActivity extends AppCompatActivity {
     public void openStatsActivity(){
         Toast.makeText(this, "Stats", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, StatsActivity.class);
-        /*
-        EmotionsController ec = new EmotionsController();
-        Bundle b = new Bundle();
-        b.putStringArrayList("emotionNameList", ec.getNameList());
-        b.putIntegerArrayList("countList", ec.getCountList());
-        intent.putExtras(b);
-        */
-
-        Toast.makeText(this, EmotionsController.getEmotionList().get(1).getCount(), Toast.LENGTH_SHORT).show();
-        //Log.d("STRING", EmotionsController.getEmotionList().get(1).getComments().get(1));
         startActivity(intent);
         }
 

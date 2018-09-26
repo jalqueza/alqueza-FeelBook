@@ -18,10 +18,8 @@ public class EmotionsController {
             emotionList = new EmotionList().getEmotionList();
             emotionNameList = new ArrayList<String>();
             countList = new ArrayList<Integer>();
-            for (int i = 0; i < emotionList.size(); i++) {
-                countList.add(emotionList.get(i).getCount());
+            for (int i = 0; i < emotionList.size(); i++)
                 emotionNameList.add(emotionList.get(i).getName());
-            }
         }
     }
 
@@ -35,6 +33,9 @@ public class EmotionsController {
     }
     static public ArrayList<Integer> getCountList() {
         check();
+        for (int i = 0; i < emotionList.size(); i++) {
+            countList.add(emotionList.get(i).getCount());
+        }
         return countList;
     }
 
