@@ -10,12 +10,12 @@ public class EmotionList {
         emotionList = new ArrayList<Emotion>();
 
         // add each Emotion object into emotionList
-        emotionList.add(new Emotion("Love", "❤"));
-        emotionList.add(new Emotion("Joy","\uD83D\uDE02" ));
-        emotionList.add(new Emotion("Surprise" ,"\uD83D\uDE2E"));
-        emotionList.add(new Emotion("Anger","\uD83D\uDE20"));
-        emotionList.add(new Emotion("Sadness","\uD83D\uDE14"));
-        emotionList.add(new Emotion("Fear","\uD83D\uDE28"));
+        emotionList.add(new Emotion("Love"));
+        emotionList.add(new Emotion("Joy"));
+        emotionList.add(new Emotion("Surprise"));
+        emotionList.add(new Emotion("Anger"));
+        emotionList.add(new Emotion("Sadness"));
+        emotionList.add(new Emotion("Fear"));
     }
 
     public ArrayList<Emotion> getEmotionList(){

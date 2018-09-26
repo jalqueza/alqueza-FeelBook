@@ -17,11 +17,13 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
-        ListAdapter emotionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EmotionsController.getNameList());
-        ListAdapter countAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, EmotionsController.getCountList());
-
         ListView emotionListView = (ListView) findViewById(R.id.emotionListView);
         ListView countListView = (ListView) findViewById(R.id.countListView);
+
+
+        ArrayAdapter<String> emotionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EmotionsController.getNameList());
+        ArrayAdapter<Integer> countAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, EmotionsController.getCountList());
+
         emotionListView.setAdapter(emotionAdapter);
         countListView.setAdapter(countAdapter);
 
