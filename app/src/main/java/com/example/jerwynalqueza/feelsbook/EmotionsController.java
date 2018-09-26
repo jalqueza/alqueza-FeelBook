@@ -13,8 +13,7 @@ public class EmotionsController {
     private static ArrayList<String> emotionNameList = null;
     private static ArrayList<Integer> countList = null;
 
-
-    public void init(){
+    static public void check(){
         if (emotionList == null) {
             emotionList = new EmotionList().getEmotionList();
             emotionNameList = new ArrayList<String>();
@@ -26,20 +25,21 @@ public class EmotionsController {
         }
     }
 
-    public ArrayList<Emotion> getEmotionList(){
+    static public ArrayList<Emotion> getEmotionList(){
+        check();
         return emotionList;
     }
-
-    public ArrayList<String> getNameList(){
-        init();
+    static public ArrayList<String> getNameList(){
+        check();
         return emotionNameList;
     }
-    public ArrayList<Integer> getCountList() {
-        init();
+    static public ArrayList<Integer> getCountList() {
+        check();
         return countList;
     }
 
     public void addEntry(String emotion, String date, String comment){
+        check();
         Entry entry = new Entry(emotion, date, comment, emotionList);
         entry.addCommentDate();
     }

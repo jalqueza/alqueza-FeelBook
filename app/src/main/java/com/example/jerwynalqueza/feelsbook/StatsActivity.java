@@ -12,21 +12,28 @@ import java.util.ArrayList;
 
 public class StatsActivity extends AppCompatActivity {
 
-    private ArrayList<String> emotionNameList;
-    private ArrayList<Integer> countList;
+    ArrayList<Integer> CountList = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
+
+
+
+        /*
         Bundle b = getIntent().getExtras();
         if(b != null) {
             emotionNameList = b.getStringArrayList("emotionNameList");
             countList = b.getIntegerArrayList("countList");
         }
+        */
+        for(int i = 0; i < EmotionsController.getEmotionList().size(); i++ )
+            CountList.add(EmotionsController.getEmotionList().get(i).getCount());
 
-        ListAdapter emotionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emotionNameList);
-        ListAdapter countAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, countList);
+        ListAdapter emotionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EmotionsController.getNameList());
+        ListAdapter countAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, EmotionsController.getCountList());
 
         ListView emotionListView = (ListView) findViewById(R.id.emotionListView);
         ListView countListView = (ListView) findViewById(R.id.countListView);
