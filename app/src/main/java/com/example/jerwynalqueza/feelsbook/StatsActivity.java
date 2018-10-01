@@ -26,6 +26,6 @@ public class StatsActivity extends AppCompatActivity {
 
         emotionListView.setAdapter(emotionAdapter);
         countListView.setAdapter(countAdapter);
-
     }
+    
 }

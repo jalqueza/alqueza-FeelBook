@@ -7,38 +7,73 @@
     tools:context=".AddEntryActivity">
 
     <Button
+        android:id="@+id/editDate"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="editDate"
+        android:text="Edit Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+    <Button
         android:id="@+id/deleteEntry"
-        android:layout_width="162dp"
-        android:layout_height="79dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="19dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="delete"
         android:text="Delete Entry"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/newCommentText"
         android:layout_width="349dp"
-        android:layout_height="405dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
+        android:layout_height="98dp"
         android:layout_marginEnd="19dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/deleteEntry"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/deleteEntry" />
 
     <Button
         android:id="@+id/editComment"
-        android:layout_width="162dp"
-        android:layout_height="79dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="editComment"
         android:text="Edit Comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCommentText" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="315dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="171dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editComment" />
 
 </android.support.constraint.ConstraintLayout>

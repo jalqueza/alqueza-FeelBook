@@ -23,6 +23,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,57 +38,59 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button addEmotionButton;
-    private Button statsButton;
-    private Button historyButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        addEmotionButton = (Button) findViewById(R.id.addEmotionButton);
-        addEmotionButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openAddEmotionActivity();
-            }
-        });
-
-        statsButton = (Button) findViewById(R.id.statsButton);
-        statsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openStatsActivity();
-            }
-        });
-
-        historyButton = (Button) findViewById(R.id.historyButton);
-        historyButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openHistoryActivity();
-            }
-        });
-
-
+        setContentView(R.layout.activity_add_emotion);
     }
 
-    public void openAddEmotionActivity(){
-        Toast.makeText(this, "Add Emotion", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, AddEmotionActivity.class);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.statsMenu:
+                openStatsActivity();
+                return true;
+            case R.id.historyMenu:
+                openHistoryActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void addEntryActivity(View v){
+        Intent intent = new Intent(this, AddEntryActivity.class);
+        Bundle b = new Bundle();
+        if(v.getId() == R.id.addLoveButton)
+            b.putString("Emotion", "Love");
+        else if(v.getId() == R.id.addAngerButton)
+            b.putString("Emotion", "Anger");
+        else if(v.getId() == R.id.addJoyButton)
+            b.putString("Emotion", "Joy");
+        else if(v.getId() == R.id.addFearButton)
+            b.putString("Emotion", "Fear");
+        else if(v.getId() == R.id.addSadnessButton)
+            b.putString("Emotion", "Sadness");
+        else if (v.getId() == R.id.addSurpriseButton)
+            b.putString("Emotion", "Surprise");
+        intent.putExtras(b);
         startActivity(intent);
     }
 
-    public void openStatsActivity(){
-        Toast.makeText(this, "Stats", Toast.LENGTH_SHORT).show();
+    public void openStatsActivity() {
         Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
-        }
+    }
 
 
     public void openHistoryActivity(){
-        Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }

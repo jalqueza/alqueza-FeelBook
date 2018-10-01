@@ -8,12 +8,12 @@ import java.util.Date;
 public class Entry {
 
     private String emotion;
-    private String date;
+    private Date date;
     private String comment;
     private ArrayList<Emotion> emotionList;
 
 
-    public Entry(String emotion, String date, String comment, ArrayList<Emotion> emotionList) {
+    public Entry(String emotion, Date date, String comment, ArrayList<Emotion> emotionList) {
         this.emotion = emotion;
         this.date = date;
         this.comment = comment;
@@ -22,8 +22,16 @@ public class Entry {
 
     public String getEmotion(){ return emotion; }
     public String getComment(){ return comment; }
+    public Date getDate(){ return date; }
     public ArrayList<Emotion> getEmotionList(){ return emotionList;}
 
+
+    public void setComment(String comment){
+        this.comment = comment;
+    }
+    public void setDate(Date date){
+        this.date = date;
+    }
     // Get matching index in emotionList
     public int findEmotionIndex() {
         int index = 10;

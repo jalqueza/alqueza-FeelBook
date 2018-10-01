@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">FeelsBook</string>
+    <string name="app_name">alqueza-FeelsBook</string>
+    <string name="title_activity_edit_entry">EditEntryActivity</string>
 </resources>

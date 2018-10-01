@@ -5,6 +5,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class EmotionsController {
 
@@ -41,21 +44,31 @@ public class EmotionsController {
         }
         return countList;
     }
-
     static public ArrayList<Entry> getEntryList(){
         check();
         return entryList.getEntryList();
     }
-    public void addEntry(String emotion, String date, String comment){
+    static public void addEntry(String emotion, Date date, String comment){
         check();
         Entry entry = new Entry(emotion, date, comment, emotionList);
         entryList.addEntryToList(entry);
     }
-    public void deleteEntry(Entry entry){
+    static public void deleteEntry(Entry entry){
         entryList.deleteEntryFromList(entry);
     }
-    public void editEntry(Entry entry, String newComment){
-        entryList.editEntry(entry,newComment);
+    static public void editComment(Entry entry, String newComment){ entryList.editComment(entry,newComment); }
+    static public void editDate(Entry entry, Date newDate){
+        entryList.editDate(entry, newDate);
+    }
+
+    static public void sort(){
+        Collections.sort(entryList.entryList, new Comparator<Entry>() {
+            public int compare(Entry e1, Entry e2) {
+                Long date1 = e1.getDate().getTime();
+                Long date2 = e2.getDate().getTime();
+                return date2.compareTo(date1);
+            }
+        });
     }
 
 }

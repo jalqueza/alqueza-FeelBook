@@ -15,7 +15,6 @@ public class AddEntryActivity extends AppCompatActivity {
     private String emotionString;
     private EmotionsController ec = new EmotionsController();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,16 +24,18 @@ public class AddEntryActivity extends AppCompatActivity {
             emotionString = b.getString("Emotion");
     }
 
-    public void skip(View v){
-        String date = new Date().toString();
+    public void skipComment(View v){
+        Date date = new Date();
         ec.addEntry(emotionString, date, "");
+        Toast.makeText(this, "Entry Added", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     public void addComment(View v){
-        String date = new Date().toString();
+        Date date = new Date();
         EditText comment = (EditText) findViewById(R.id.commentText);
         ec.addEntry(emotionString, date, comment.getText().toString());
+        Toast.makeText(this, "Entry Added", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
