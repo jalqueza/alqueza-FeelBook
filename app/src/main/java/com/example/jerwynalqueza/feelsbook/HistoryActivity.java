@@ -19,6 +19,8 @@ import java.util.TimeZone;
 
 public class HistoryActivity extends AppCompatActivity {
 
+    // Activity where entries are shown with date
+
     private ArrayList<String> entryStrings;
     private ArrayList<String> datesList;
 
@@ -34,14 +36,14 @@ public class HistoryActivity extends AppCompatActivity {
         entryStrings = new ArrayList<String>();
         datesList = new ArrayList<String>();
 
-        for (int i = 0; i < EmotionsController.getEntryList().size() ; i++) {
-            TimeZone tz = TimeZone.getTimeZone("UTC");
+        for (int i = 0; i < EmotionsController.getEntryListObj().getEntryList().size() ; i++) {
+            TimeZone tz = TimeZone.getTimeZone(MainActivity.timezone);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
             df.setTimeZone(tz);
-            String ISOdate = df.format(EmotionsController.getEntryList().get(i).getDate());
+            String ISOdate = df.format(EmotionsController.getEntryListObj().getEntryList().get(i).getDate());
             datesList.add(ISOdate);
             String string;
-            string = EmotionsController.getEntryList().get(i).getEmotion() + ": " + ISOdate;
+            string = EmotionsController.getEntryListObj().getEntryList().get(i).getEmotion() + ": " + ISOdate;
             entryStrings.add(string);
         }
 
@@ -56,6 +58,7 @@ public class HistoryActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(HistoryActivity.this, EditEntryActivity.class);
                         Bundle b = new Bundle();
+                        // Passes the index of the entry in the entry list
                         b.putInt("Index", position);
                         b.putString("Date", datesList.get(position));
                         intent.putExtras(b);

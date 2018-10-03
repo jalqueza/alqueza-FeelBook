@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Emotion {
 
+    // Class of each emotion, holds the name and count
+
     private String name;
     private int count = 0;
 

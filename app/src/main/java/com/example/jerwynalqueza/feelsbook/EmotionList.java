@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class EmotionList {
 
+    // Class that stores an ArrayList of Emotion Objects
+
     private ArrayList<Emotion> emotionList;
 
     public EmotionList(){

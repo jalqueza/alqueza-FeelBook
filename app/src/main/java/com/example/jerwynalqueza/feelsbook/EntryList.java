@@ -5,7 +5,9 @@ import java.util.Date;
 
 public class EntryList {
 
-    public ArrayList<Entry> entryList;
+    // Class that holds an ArrayList of entries and modifies entries
+
+    private ArrayList<Entry> entryList;
 
     public EntryList(){
         entryList = new ArrayList<Entry>();
@@ -26,5 +28,4 @@ public class EntryList {
     public void editDate(Entry entry, Date newDate){
         entry.setDate(newDate);
     }
-
 }

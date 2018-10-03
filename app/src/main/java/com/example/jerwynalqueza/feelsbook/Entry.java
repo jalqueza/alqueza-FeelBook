@@ -7,6 +7,8 @@ import java.util.Date;
 
 public class Entry {
 
+    // Class that holds emotion name, date and comment
+
     private String emotion;
     private Date date;
     private String comment;
@@ -22,15 +24,15 @@ public class Entry {
     public String getComment(){ return comment; }
     public Date getDate(){ return date; }
 
-
     public void setComment(String comment){
         this.comment = comment;
     }
     public void setDate(Date date){
         this.date = date;
     }
+
     // Get matching index in emotionList
-    public int findEmotionIndex(ArrayList<Emotion> emotionList) {
+    private int findEmotionIndex(ArrayList<Emotion> emotionList) {
         int index = 10;
         for (int i = 0; i < emotionList.size(); i++) {
             if (this.emotion.equals(emotionList.get(i).getName())) {

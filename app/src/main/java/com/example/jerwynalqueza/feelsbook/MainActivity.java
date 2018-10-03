@@ -46,6 +46,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,11 +58,27 @@ public class MainActivity extends AppCompatActivity {
 
     private EmotionsController ec = new EmotionsController();
 
+    public static String timezone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_emotion);
         loadFromFile();
+
+
+        Calendar cal = Calendar.getInstance();
+        long milliDiff = cal.get(Calendar.ZONE_OFFSET);
+        // Got local offset, now loop through available timezone id(s).
+        String [] ids = TimeZone.getAvailableIDs();
+        for (String id : ids) {
+            TimeZone tz = TimeZone.getTimeZone(id);
+            if (tz.getRawOffset() == milliDiff) {
+                // Found a match.
+                timezone = id;
+                break;
+            }
+        }
     }
 
     @Override
@@ -87,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     public void addEntryActivity(View v){
         Intent intent = new Intent(this, AddEntryActivity.class);
         Bundle b = new Bundle();
+
+        // Pass Emotion name into AddEntryActivity
         if(v.getId() == R.id.addLoveButton)
             b.putString("Emotion", "Love");
         else if(v.getId() == R.id.addAngerButton)
@@ -99,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             b.putString("Emotion", "Sadness");
         else if (v.getId() == R.id.addSurpriseButton)
             b.putString("Emotion", "Surprise");
+
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -136,11 +157,8 @@ public class MainActivity extends AppCompatActivity {
             EmotionsController.loadFile(emotionList, entryList);
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, "not found", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

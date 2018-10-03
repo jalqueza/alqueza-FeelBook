@@ -27,6 +27,8 @@ import java.util.TimeZone;
 public class EditEntryActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
+    // Activity where delete, edit comment and edit date (click on date textview) options are available for the entry
+
     private int index;
     private Entry editEntry;
 
@@ -37,6 +39,7 @@ public class EditEntryActivity extends AppCompatActivity implements
     private String dateOfEntry;
     private TextView dateView;
     private Date newDate = null;
+
     private int yearFinal, monthFinal, dayFinal;
 
     @Override
@@ -49,7 +52,7 @@ public class EditEntryActivity extends AppCompatActivity implements
             dateOfEntry = b.getString("Date");
         }
 
-        editEntry = EmotionsController.getEntryList().get(index);
+        editEntry = EmotionsController.getEntryListObj().getEntryList().get(index);
 
         comment = editEntry.getComment();
         commentView = (TextView) findViewById(R.id.newCommentText);
@@ -58,6 +61,8 @@ public class EditEntryActivity extends AppCompatActivity implements
         dateView = (TextView) findViewById(R.id.dateTextView);
         dateView.setText(dateOfEntry);
 
+
+        // Click on date textview to change date
         dateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +81,7 @@ public class EditEntryActivity extends AppCompatActivity implements
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         yearFinal = year;
-        monthFinal = month + 1;
+        monthFinal = month;
         dayFinal = dayOfMonth;
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR);
@@ -88,8 +93,10 @@ public class EditEntryActivity extends AppCompatActivity implements
     }
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        // Change TextView of date if time is set
+
         newDate = new Date(yearFinal-1900, monthFinal, dayFinal, hourOfDay, minute);
-        TimeZone tz = TimeZone.getTimeZone("UTC");
+        TimeZone tz = TimeZone.getTimeZone(MainActivity.timezone);
         java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
         df.setTimeZone(tz);
         String ISOdate = df.format(newDate);
@@ -109,8 +116,8 @@ public class EditEntryActivity extends AppCompatActivity implements
             Toast.makeText(EditEntryActivity.this, "Error: Comment Limit is 100 Char", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (newComment != comment) {
-            EmotionsController.editComment(editEntry, newComment);
+        if (!newComment.equals(comment)) {
+            EmotionsController.getEntryListObj().editComment(editEntry, newComment);
             saveInFile();
             Toast.makeText(EditEntryActivity.this, "Comment Saved", Toast.LENGTH_SHORT).show();
         }
@@ -118,7 +125,7 @@ public class EditEntryActivity extends AppCompatActivity implements
 
     public void editDate(View v){
         if (newDate != null){
-            EmotionsController.editDate(editEntry, newDate);
+            EmotionsController.getEntryListObj().editDate(editEntry, newDate);
             saveInFile();
             Toast.makeText(EditEntryActivity.this, "Date Changed", Toast.LENGTH_SHORT).show();
         }
@@ -134,8 +141,8 @@ public class EditEntryActivity extends AppCompatActivity implements
             OutputStreamWriter writer2 = new OutputStreamWriter(fos2);
             Gson gson = new Gson();
 
-            gson.toJson(EmotionsController.getEmotionList(), writer1);
-            gson.toJson(EmotionsController.getEntryList(), writer2);
+            gson.toJson(EmotionsController.getEmotionListObj().getEmotionList(), writer1);
+            gson.toJson(EmotionsController.getEntryListObj().getEntryList(), writer2);
 
 
             writer1.flush();
@@ -144,10 +151,8 @@ public class EditEntryActivity extends AppCompatActivity implements
             fos2.close();
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

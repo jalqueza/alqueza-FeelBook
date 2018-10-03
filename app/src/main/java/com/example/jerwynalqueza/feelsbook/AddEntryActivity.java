@@ -1,9 +1,11 @@
 package com.example.jerwynalqueza.feelsbook;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -25,7 +28,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class AddEntryActivity extends AppCompatActivity {
+public class AddEntryActivity extends AppCompatActivity implements
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    // Activity where Entry is first automatically added; then delete entry, add comment and edit date options are available
 
     private String emotionString;
 
@@ -33,30 +39,33 @@ public class AddEntryActivity extends AppCompatActivity {
     private String newComment = null;
 
     private TextView dateView;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
     private Date newDate = null;
+    private int yearFinal, monthFinal, dayFinal;
 
     private Entry entry;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_entry);
+
         Bundle b = getIntent().getExtras();
         if(b != null)
             emotionString = b.getString("Emotion");
 
         Date date = new Date();
+
         EmotionsController.addEntry(emotionString, date, "");
         saveInFile();
         Toast.makeText(this, "Entry Added", Toast.LENGTH_SHORT).show();
 
-        int index = EmotionsController.getEntryList().size() - 1;
-        entry = EmotionsController.getEntryList().get(index);
+        int index = EmotionsController.getEntryListObj().getEntryList().size() - 1;
+        entry = EmotionsController.getEntryListObj().getEntryList().get(index);
 
         // Converting time to ISO format
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        TimeZone tz = TimeZone.getTimeZone(MainActivity.timezone);
+        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         df.setTimeZone(tz);
         String ISOdate = df.format(date);
         dateView = (TextView) findViewById(R.id.dateTextView);
@@ -72,27 +81,42 @@ public class AddEntryActivity extends AppCompatActivity {
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         AddEntryActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        dateSetListener,
+                        AddEntryActivity.this,
                         year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+
             }
         });
-
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                newDate = new Date(year-1900, month, dayOfMonth);
-                TimeZone tz = TimeZone.getTimeZone("UTC");
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-                df.setTimeZone(tz);
-                String ISOdate = df.format(newDate);
-                dateView.setText(ISOdate);
-            }
-        };
     }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        yearFinal = year;
+        monthFinal = month;
+        dayFinal = dayOfMonth;
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR);
+        int minute = cal.get(Calendar.MINUTE);
+
+        TimePickerDialog dialog = new TimePickerDialog(AddEntryActivity.this,AddEntryActivity.this,
+                hour, minute, android.text.format.DateFormat.is24HourFormat(this));
+        dialog.show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        // Change TextView of date if time is set
+
+        newDate = new Date(yearFinal-1900, monthFinal, dayFinal, hourOfDay, minute);
+        TimeZone tz = TimeZone.getTimeZone(MainActivity.timezone);
+        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+        String ISOdate = df.format(newDate);
+        dateView.setText(ISOdate);
+    }
+
+
+    // ENTRY OPTIONS
 
     public void delete(View v) {
         EmotionsController.deleteEntry(entry);
@@ -104,27 +128,25 @@ public class AddEntryActivity extends AppCompatActivity {
     public void editComment(View v) {
 
         commentView = (TextView) findViewById(R.id.newCommentText);
-        String newComment = commentView.getText().toString();
+        newComment = commentView.getText().toString();
         if (newComment.length() > 100) {
             Toast.makeText(AddEntryActivity.this, "Error: Comment Limit is 100 Char", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (newComment == null)
-            EmotionsController.editComment(entry, "");
-        else {
-            EmotionsController.editComment(entry, newComment);
+        if (!newComment.equals(entry.getComment())){ // empty comment
+            EmotionsController.getEntryListObj().editComment(entry, newComment);
             saveInFile();
-            Toast.makeText(AddEntryActivity.this, "Comment Changed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddEntryActivity.this, "Comment Saved", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void editDate(View v){
 
         if (newDate != null){
-            EmotionsController.editDate(entry, newDate);
+            EmotionsController.getEntryListObj().editDate(entry, newDate);
+            saveInFile();
             Toast.makeText(AddEntryActivity.this, "Date Changed", Toast.LENGTH_SHORT).show();
         }
-        saveInFile();
     }
 
     private void saveInFile() {
@@ -137,8 +159,8 @@ public class AddEntryActivity extends AppCompatActivity {
             OutputStreamWriter writer2 = new OutputStreamWriter(fos2);
             Gson gson = new Gson();
 
-            gson.toJson(EmotionsController.getEmotionList(), writer1);
-            gson.toJson(EmotionsController.getEntryList(), writer2);
+            gson.toJson(EmotionsController.getEmotionListObj().getEmotionList(), writer1);
+            gson.toJson(EmotionsController.getEntryListObj().getEntryList(), writer2);
 
 
             writer1.flush();
@@ -147,10 +169,8 @@ public class AddEntryActivity extends AppCompatActivity {
             fos2.close();
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
