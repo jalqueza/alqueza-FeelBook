@@ -1,6 +1,7 @@
 package com.example.jerwynalqueza.feelsbook;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,7 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class EditEntryActivity extends AppCompatActivity {
+public class EditEntryActivity extends AppCompatActivity implements
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     private int index;
     private Entry editEntry;
@@ -33,8 +36,8 @@ public class EditEntryActivity extends AppCompatActivity {
 
     private String dateOfEntry;
     private TextView dateView;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
     private Date newDate = null;
+    private int yearFinal, monthFinal, dayFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,30 +66,34 @@ public class EditEntryActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        EditEntryActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        dateSetListener,
+                DatePickerDialog dialog = new DatePickerDialog(EditEntryActivity.this, EditEntryActivity.this,
                         year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
+    }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        yearFinal = year;
+        monthFinal = month + 1;
+        dayFinal = dayOfMonth;
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR);
+        int minute = cal.get(Calendar.MINUTE);
 
-
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                newDate = new Date(year-1900, month, dayOfMonth);
-                TimeZone tz = TimeZone.getTimeZone("UTC");
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-                df.setTimeZone(tz);
-                String ISOdate = df.format(newDate);
-                dateView.setText(ISOdate);
-            }
-        };
+        TimePickerDialog dialog = new TimePickerDialog(EditEntryActivity.this,EditEntryActivity.this,
+                hour, minute, android.text.format.DateFormat.is24HourFormat(this));
+        dialog.show();
+    }
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        newDate = new Date(yearFinal-1900, monthFinal, dayFinal, hourOfDay, minute);
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+        String ISOdate = df.format(newDate);
+        dateView.setText(ISOdate);
     }
 
     public void delete(View v) {
