@@ -2,6 +2,8 @@
 
 Resources used:
 
+Abram Hindle, Sep 11, 2014, CMPUT301: Saga of Student Picker, https://www.youtube.com/watchv=5PPD0ncJU1g&list=PL240uJOh_Vb4PtMZ0f7N8ACYkCLv0673O
+
 Tihomir RAdeff, Aug 29, 2016, Using Date/Time Picker Dialog in Android Studio, https://www.youtube.com/watch?v=a_Ap6T4RlYU
 
 thenewboston, Jan 3, 2015, Android App Development for Beginners - 46 - ListView Example, https://www.youtube.com/watch?v=A-_hKWMA7mk
