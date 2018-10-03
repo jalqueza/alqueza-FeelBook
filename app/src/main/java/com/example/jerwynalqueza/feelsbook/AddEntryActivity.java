@@ -134,7 +134,7 @@ public class AddEntryActivity extends AppCompatActivity implements
             return;
         }
         if (!newComment.equals(entry.getComment())){ // empty comment
-            EmotionsController.getEntryListObj().editComment(entry, newComment);
+            entry.setComment(newComment);
             saveInFile();
             Toast.makeText(AddEntryActivity.this, "Comment Saved", Toast.LENGTH_SHORT).show();
         }
@@ -143,9 +143,9 @@ public class AddEntryActivity extends AppCompatActivity implements
     public void editDate(View v){
 
         if (newDate != null){
-            EmotionsController.getEntryListObj().editDate(entry, newDate);
+            entry.setDate(newDate);
             saveInFile();
-            Toast.makeText(AddEntryActivity.this, "Date Changed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddEntryActivity.this, "Date Saved", Toast.LENGTH_SHORT).show();
         }
     }
 

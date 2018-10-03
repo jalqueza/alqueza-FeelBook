@@ -22,10 +22,4 @@ public class EntryList {
 
     public void addEntryToList(Entry entry){ entryList.add(entry); }
     public void deleteEntryFromList(Entry entry){ entryList.remove(entry); }
-    public void editComment(Entry entry, String newComment){
-        entry.setComment(newComment);
-    }
-    public void editDate(Entry entry, Date newDate){
-        entry.setDate(newDate);
-    }
 }
