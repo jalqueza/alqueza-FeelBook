@@ -33,15 +33,34 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static final String FILENAME1 = "emotionList0.sav";
+    public static final String FILENAME2 = "entryList0.sav";
+
+    private EmotionsController ec = new EmotionsController();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_emotion);
+        loadFromFile();
     }
 
     @Override
@@ -93,5 +112,36 @@ public class MainActivity extends AppCompatActivity {
     public void openHistoryActivity(){
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
+    }
+
+
+    private void loadFromFile() {
+
+        try {
+
+            FileInputStream fis1 = openFileInput(FILENAME1);
+            FileInputStream fis2 = openFileInput(FILENAME2);
+            BufferedReader in1 = new BufferedReader(new InputStreamReader(fis1));
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
+            Gson gson = new Gson();
+
+
+            Type listType = new TypeToken<ArrayList<Emotion>>() {}.getType();
+            ArrayList<Emotion> emotionList = new ArrayList<Emotion>();
+            emotionList = gson.fromJson(in1, listType);
+            Type listType2 =  new TypeToken<ArrayList<Entry>>() {}.getType();
+            ArrayList<Entry> entryList = new ArrayList<Entry>();
+            entryList = gson.fromJson(in2, listType2);
+
+            EmotionsController.loadFile(emotionList, entryList);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "not found", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

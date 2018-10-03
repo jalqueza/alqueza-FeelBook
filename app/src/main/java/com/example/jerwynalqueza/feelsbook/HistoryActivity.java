@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,7 @@ import java.util.TimeZone;
 public class HistoryActivity extends AppCompatActivity {
 
     private ArrayList<String> entryStrings;
-    private ArrayList<Date> datesList;
+    private ArrayList<String> datesList;
 
     private ArrayAdapter<String> entryAdapter;
     private ListView historyListView;
@@ -31,15 +32,16 @@ public class HistoryActivity extends AppCompatActivity {
         EmotionsController.sort();
 
         entryStrings = new ArrayList<String>();
-        datesList = new ArrayList<Date>();
+        datesList = new ArrayList<String>();
 
         for (int i = 0; i < EmotionsController.getEntryList().size() ; i++) {
-            datesList.add(EmotionsController.getEntryList().get(i).getDate());
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+            df.setTimeZone(tz);
+            String ISOdate = df.format(EmotionsController.getEntryList().get(i).getDate());
+            datesList.add(ISOdate);
             String string;
-            if (EmotionsController.getEntryList().get(i).getComment() == "")
-                string = EmotionsController.getEntryList().get(i).getEmotion();
-            else
-                string = EmotionsController.getEntryList().get(i).getEmotion() + ": " + EmotionsController.getEntryList().get(i).getComment();
+            string = EmotionsController.getEntryList().get(i).getEmotion() + ": " + ISOdate;
             entryStrings.add(string);
         }
 
@@ -55,14 +57,7 @@ public class HistoryActivity extends AppCompatActivity {
                         Intent intent = new Intent(HistoryActivity.this, EditEntryActivity.class);
                         Bundle b = new Bundle();
                         b.putInt("Index", position);
-                        b.putString("String", String.valueOf(parent.getItemAtPosition(position)));
-
-                        TimeZone tz = TimeZone.getTimeZone("UTC");
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-                        df.setTimeZone(tz);
-                        String ISOdate = df.format(datesList.get(position));
-                        b.putString("Date", ISOdate);
-
+                        b.putString("Date", datesList.get(position));
                         intent.putExtras(b);
                         startActivity(intent);
                     }

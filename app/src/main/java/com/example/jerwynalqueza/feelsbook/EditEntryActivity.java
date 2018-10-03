@@ -10,6 +10,12 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,11 +25,11 @@ import java.util.TimeZone;
 public class EditEntryActivity extends AppCompatActivity {
 
     private int index;
+    private Entry editEntry;
 
     private TextView commentView;
-    private String fullComment; // with emotion
-    private String newComment = null;
-    private String [] oldComment;
+    private String newComment;
+    private String comment;
 
     private String dateOfEntry;
     private TextView dateView;
@@ -37,16 +43,14 @@ public class EditEntryActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if (b != null) {
             index = b.getInt("Index");
-            fullComment = b.getString("String");
             dateOfEntry = b.getString("Date");
         }
-        oldComment = fullComment.split(": ", 2);
 
-        if (oldComment.length == 2) {
-            commentView = (TextView) findViewById(R.id.newCommentText);
-            commentView.setText(oldComment[1]);
-        }
+        editEntry = EmotionsController.getEntryList().get(index);
 
+        comment = editEntry.getComment();
+        commentView = (TextView) findViewById(R.id.newCommentText);
+        commentView.setText(comment);
 
         dateView = (TextView) findViewById(R.id.dateTextView);
         dateView.setText(dateOfEntry);
@@ -86,29 +90,58 @@ public class EditEntryActivity extends AppCompatActivity {
     }
 
     public void delete(View v) {
-        Entry deleteEntry = EmotionsController.getEntryList().get(index);
-        EmotionsController.deleteEntry(deleteEntry);
+        EmotionsController.deleteEntry(editEntry);
         Toast.makeText(EditEntryActivity.this, "Entry Deleted", Toast.LENGTH_SHORT).show();
+        saveInFile();
         finish();
     }
 
     public void editComment(View v) {
-        Entry editEntry = EmotionsController.getEntryList().get(index);
-        commentView = (TextView) findViewById(R.id.newCommentText);
-        String newComment = commentView.getText().toString();
-        if (newComment == null)
-            EmotionsController.editComment(editEntry, "");
-        else
+        newComment = commentView.getText().toString();
+        if (newComment.length() > 100) {
+            Toast.makeText(EditEntryActivity.this, "Error: Comment Limit is 100 Char", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (newComment != comment) {
             EmotionsController.editComment(editEntry, newComment);
-        Toast.makeText(EditEntryActivity.this, "Comment Changed", Toast.LENGTH_SHORT).show();
+            saveInFile();
+            Toast.makeText(EditEntryActivity.this, "Comment Saved", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void editDate(View v){
-
-        Entry editEntry = EmotionsController.getEntryList().get(index);
         if (newDate != null){
             EmotionsController.editDate(editEntry, newDate);
+            saveInFile();
             Toast.makeText(EditEntryActivity.this, "Date Changed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveInFile() {
+        try {
+
+
+            FileOutputStream fos1 = openFileOutput(MainActivity.FILENAME1, 0);
+            FileOutputStream fos2 = openFileOutput(MainActivity.FILENAME2, 0);
+            OutputStreamWriter writer1 = new OutputStreamWriter(fos1);
+            OutputStreamWriter writer2 = new OutputStreamWriter(fos2);
+            Gson gson = new Gson();
+
+            gson.toJson(EmotionsController.getEmotionList(), writer1);
+            gson.toJson(EmotionsController.getEntryList(), writer2);
+
+
+            writer1.flush();
+            writer2.flush();
+            fos1.close();
+            fos2.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

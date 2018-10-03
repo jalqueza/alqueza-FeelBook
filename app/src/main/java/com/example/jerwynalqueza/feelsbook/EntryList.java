@@ -14,15 +14,12 @@ public class EntryList {
     public ArrayList<Entry> getEntryList(){
         return entryList;
     }
+    public void setEntryList(ArrayList<Entry> entryList){
+        this.entryList = entryList;
+    }
 
-    public void addEntryToList(Entry entry){
-        entryList.add(entry);
-        entry.increaseCount();
-    }
-    public void deleteEntryFromList(Entry entry){
-        entryList.remove(entry);
-        entry.decreaseCount();
-    }
+    public void addEntryToList(Entry entry){ entryList.add(entry); }
+    public void deleteEntryFromList(Entry entry){ entryList.remove(entry); }
     public void editComment(Entry entry, String newComment){
         entry.setComment(newComment);
     }

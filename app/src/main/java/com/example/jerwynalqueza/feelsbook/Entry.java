@@ -10,20 +10,17 @@ public class Entry {
     private String emotion;
     private Date date;
     private String comment;
-    private ArrayList<Emotion> emotionList;
 
 
-    public Entry(String emotion, Date date, String comment, ArrayList<Emotion> emotionList) {
+    public Entry(String emotion, Date date, String comment) {
         this.emotion = emotion;
         this.date = date;
         this.comment = comment;
-        this.emotionList = emotionList;
     }
 
     public String getEmotion(){ return emotion; }
     public String getComment(){ return comment; }
     public Date getDate(){ return date; }
-    public ArrayList<Emotion> getEmotionList(){ return emotionList;}
 
 
     public void setComment(String comment){
@@ -33,7 +30,7 @@ public class Entry {
         this.date = date;
     }
     // Get matching index in emotionList
-    public int findEmotionIndex() {
+    public int findEmotionIndex(ArrayList<Emotion> emotionList) {
         int index = 10;
         for (int i = 0; i < emotionList.size(); i++) {
             if (this.emotion.equals(emotionList.get(i).getName())) {
@@ -44,12 +41,12 @@ public class Entry {
         return index;
     }
 
-    public void increaseCount() {
-        int index = findEmotionIndex();
+    public void increaseCount(ArrayList<Emotion> emotionList) {
+        int index = findEmotionIndex(emotionList);
         emotionList.get(index).increaseCount();
     }
-    public void decreaseCount() {
-        int index = findEmotionIndex();
+    public void decreaseCount(ArrayList<Emotion> emotionList) {
+        int index = findEmotionIndex(emotionList);
         emotionList.get(index).decreaseCount();
     }
 }

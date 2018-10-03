@@ -9,7 +9,6 @@ public class Emotion {
     private String name;
     private int count = 0;
 
-
     public Emotion(String name){
         this.name = name;
     }

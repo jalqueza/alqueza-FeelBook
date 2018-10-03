@@ -9,23 +9,23 @@
     <Button
         android:id="@+id/addSurpriseButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Surprise 😮"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.396" />
+        app:layout_constraintTop_toBottomOf="@+id/addJoyButton" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="518dp"
-        android:layout_height="75dp"
-        android:text="Add Emotion"
+        android:layout_height="66dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
+        android:text="Add Feeling"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/addLoveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,65 +33,55 @@
     <Button
         android:id="@+id/addJoyButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Joy 😂"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintTop_toBottomOf="@+id/addLoveButton" />
 
     <Button
         android:id="@+id/addAngerButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Anger 😠"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.587" />
+        app:layout_constraintTop_toBottomOf="@+id/addSurpriseButton" />
 
     <Button
         android:id="@+id/addSadnessButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Sadness 😔"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.778" />
+        app:layout_constraintTop_toBottomOf="@+id/addAngerButton" />
 
     <Button
         android:id="@+id/addFearButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Fear 😨"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.969" />
+        app:layout_constraintTop_toBottomOf="@+id/addSadnessButton" />
 
     <Button
         android:id="@+id/addLoveButton"
         android:layout_width="402dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:onClick="addEntryActivity"
         android:text="Love ❤"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </android.support.constraint.ConstraintLayout>

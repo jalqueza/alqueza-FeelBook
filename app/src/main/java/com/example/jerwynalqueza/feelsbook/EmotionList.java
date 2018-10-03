@@ -21,4 +21,5 @@ public class EmotionList {
     public ArrayList<Emotion> getEmotionList(){
         return emotionList;
     }
+    public void setEmotionList(ArrayList<Emotion> emotionList){this.emotionList = emotionList;}
 }
