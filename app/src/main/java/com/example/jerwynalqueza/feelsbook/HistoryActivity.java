@@ -37,6 +37,7 @@ public class HistoryActivity extends AppCompatActivity {
         datesList = new ArrayList<String>();
 
         for (int i = 0; i < EmotionsController.getEntryListObj().getEntryList().size() ; i++) {
+            // String of emotion name and date
             TimeZone tz = TimeZone.getTimeZone(MainActivity.timezone);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
             df.setTimeZone(tz);
