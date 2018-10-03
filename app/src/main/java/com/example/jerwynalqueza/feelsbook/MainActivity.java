@@ -53,8 +53,8 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final String FILENAME1 = "emotionList0.sav";
-    public static final String FILENAME2 = "entryList0.sav";
+    public static final String FILENAME1 = "emotionlist.sav";
+    public static final String FILENAME2 = "entrylist.sav";
 
     private EmotionsController ec = new EmotionsController();
 
