@@ -1,4 +1,4 @@
-# alqueza-FeelsBook
+# alqueza-FeelsBook: An android app where you can record your feelings
 
 Resources used:
 
