@@ -1,5 +1,7 @@
 # alqueza-FeelsBook: An android app where you can record your feelings
 
+APK file in /app
+
 Resources used:
 
 Abram Hindle, Sep 11, 2014, CMPUT301: Saga of Student Picker, https://www.youtube.com/watchv=5PPD0ncJU1g&list=PL240uJOh_Vb4PtMZ0f7N8ACYkCLv0673O
