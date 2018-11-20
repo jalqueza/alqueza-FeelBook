@@ -2,8 +2,10 @@ package com.example.jerwynalqueza.feelsbook;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -121,6 +123,12 @@ public class EditEntryActivity extends AppCompatActivity implements
             saveInFile();
             Toast.makeText(EditEntryActivity.this, "Comment Saved", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    public void takePicture(View v){
+        Intent intent = new Intent(this, pictureActivity.class);
+        startActivity(intent);
     }
 
     public void editDate(View v){
